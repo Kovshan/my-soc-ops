@@ -46,3 +46,22 @@ App.tsx
 **Bug hunt**: Game logic → hook state flow → component rendering
 
 **Data**: Edit [src/data/questions.ts](src/data/questions.ts) (24 questions + FREE_SPACE constant)
+
+## Design Guide (Cyberpunk Neon)
+
+Purpose: Provide designers and contributors a concise reference for the Cyberpunk Neon redesign applied to the app.
+
+- **Palette & Tokens**: Use the `@theme` tokens defined in `src/index.css`. Primary accent is neon pink (`--color-accent`), secondary neon cyan (`--color-marked`), and neon purple (`--color-bingo`). Prefer token names over hard-coded hex values in components and CSS.
+- **Typography**: Keep system font stack but favour bold weights for headings and semibold for UI controls to improve legibility against neon glows.
+- **Surfaces**: Use `.glass-card` for panels and headers to enable blurred/translucent backgrounds; fall back to solid dark surfaces under `prefers-reduced-transparency`.
+- **Glow & Effects**: Apply `.neon-glow` and `.neon-ring` sparingly — reserve strong glows for CTAs, winning states, and modal titles. Respect `prefers-reduced-motion` and `prefers-reduced-transparency`.
+- **Buttons**: Use `.neon-btn` for primary CTAs. Maintain clear focus outlines and accessible tap targets (≥44px recommended).
+- **Cards & Modals**: Modals use `.neon-vignette` backdrop and `.glass-card` content; center modals and avoid excessive animation when `prefers-reduced-motion` is set.
+- **SVGs & Assets**: Recolor existing SVGs to neon gradients and place replacements in `src/assets`. When adding new assets, prefer SVG with currentColor-friendly fills to allow token-driven recoloring.
+- **Accessibility**: Check contrast for text-on-glass and neon overlays. Provide plain, high-contrast alternatives for users who disable transparency or motion.
+- **Utilities**: Add new utilities in `src/index.css` under `@layer utilities`. Use these utilities (`neon-glow`, `neon-text`, `glass-card`, `neon-btn`) instead of repeating raw styles.
+
+Usage notes:
+- To change the theme colors safely, update the `@theme` block in `src/index.css` so existing component classes such as `bg-accent` and `bg-marked` will adopt the new palette automatically.
+- Keep layout classes (grid, aspect-square, spacing) unchanged unless the change is layout-driven — the redesign is visual-first.
+- Document any new utilities in `docs/STYLE.md` when added.
