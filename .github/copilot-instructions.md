@@ -49,19 +49,19 @@ App.tsx
 
 ## Design Guide (Cyberpunk Neon)
 
-Purpose: Provide designers and contributors a concise reference for the Cyberpunk Neon redesign applied to the app.
+Purpose: Concise guidance for the v3 landing (Neon Showcase) while keeping the system consistent.
 
-- **Palette & Tokens**: Use the `@theme` tokens defined in `src/index.css`. Primary accent is neon pink (`--color-accent`), secondary neon cyan (`--color-marked`), and neon purple (`--color-bingo`). Prefer token names over hard-coded hex values in components and CSS.
-- **Typography**: Keep system font stack but favour bold weights for headings and semibold for UI controls to improve legibility against neon glows.
-- **Surfaces**: Use `.glass-card` for panels and headers to enable blurred/translucent backgrounds; fall back to solid dark surfaces under `prefers-reduced-transparency`.
-- **Glow & Effects**: Apply `.neon-glow` and `.neon-ring` sparingly — reserve strong glows for CTAs, winning states, and modal titles. Respect `prefers-reduced-motion` and `prefers-reduced-transparency`.
-- **Buttons**: Use `.neon-btn` for primary CTAs. Maintain clear focus outlines and accessible tap targets (≥44px recommended).
-- **Cards & Modals**: Modals use `.neon-vignette` backdrop and `.glass-card` content; center modals and avoid excessive animation when `prefers-reduced-motion` is set.
-- **SVGs & Assets**: Recolor existing SVGs to neon gradients and place replacements in `src/assets`. When adding new assets, prefer SVG with currentColor-friendly fills to allow token-driven recoloring.
-- **Accessibility**: Check contrast for text-on-glass and neon overlays. Provide plain, high-contrast alternatives for users who disable transparency or motion.
-- **Utilities**: Add new utilities in `src/index.css` under `@layer utilities`. Use these utilities (`neon-glow`, `neon-text`, `glass-card`, `neon-btn`) instead of repeating raw styles.
+- **Palette & Tokens**: Drive color through tokens in [src/index.css](src/index.css) (`--color-accent`, `--color-accent-light`, `--color-marked`, `--color-bingo`). Prefer tokens over hex. Small theme tweaks should only update the `@theme` block.
+- **Typography**: System stack; heavy weight for hero titles (`font-bold`/`font-black`), semibold for CTAs and section labels for legibility against glow.
+- **Surfaces**: Use `.glass-card` for content panels. Layer cards subtly (offset shadow/opacity) for depth. Under `prefers-reduced-transparency`, fall back to solid dark surfaces.
+- **Glow & Motion**: Reserve strong `.neon-glow` for the hero title and key CTAs. Background accents may use soft pulsing orbs; all animations must respect `prefers-reduced-motion`.
+- **Buttons**: Primary CTAs use `.neon-btn` with clear focus rings (cyan) and adequate hit area (≥44px). Secondary CTAs use bordered styles with token colors.
+- **Cards & Modals**: Use `.neon-vignette` for modal backdrops and `.glass-card` for content. Center modals, minimize animation, and ensure ESC/overlay click closes when appropriate.
+- **Showcase Elements (v3)**: Hero with `.neon-glow` title, layered `.glass-card` info block with a compact stats row (Board/Questions/Connections), and dual CTAs: “Start Game” and “How to Play”.
+- **Accessibility**: Maintain WCAG-appropriate contrast on glass; ensure keyboard order, focus visibility, and ARIA labels (especially for the modal). Provide motion/transparency fallbacks.
+- **Utilities**: Prefer shared utilities from [src/index.css](src/index.css) — `neon-glow`, `neon-text`, `glass-card`, `neon-btn`, `neon-ring`, `neon-vignette`. Add new utilities under `@layer utilities` and avoid per-component CSS.
 
 Usage notes:
-- To change the theme colors safely, update the `@theme` block in `src/index.css` so existing component classes such as `bg-accent` and `bg-marked` will adopt the new palette automatically.
-- Keep layout classes (grid, aspect-square, spacing) unchanged unless the change is layout-driven — the redesign is visual-first.
-- Document any new utilities in `docs/STYLE.md` when added.
+- Modify appearance by editing tokens in [src/index.css](src/index.css); component classes like `bg-accent`/`text-accent` will update automatically.
+- Keep layout primitives (grid, spacing, aspect-square) stable unless a change is explicitly layout-driven.
+
