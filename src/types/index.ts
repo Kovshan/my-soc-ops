@@ -14,3 +14,13 @@ export interface BingoLine {
 }
 
 export type GameState = 'start' | 'playing' | 'bingo';
+
+// Multi-mode support
+export type GameMode = 'bingo' | 'hunt';
+
+// Scavenger Hunt item
+export interface HuntItem {
+  id: number;
+  text: string;
+  checked: boolean;
+}
