@@ -1,30 +1,99 @@
+import { useState } from 'react';
+import { HowToPlayModal } from './HowToPlayModal';
+
 interface StartScreenProps {
   onStart: () => void;
 }
 
 export function StartScreen({ onStart }: StartScreenProps) {
+  const [showModal, setShowModal] = useState(false);
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-full p-6 bg-gray-50">
-      <div className="text-center max-w-sm">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">Soc Ops</h1>
-        <p className="text-lg text-gray-600 mb-8">Social Bingo</p>
-        
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 mb-8">
-          <h2 className="font-semibold text-gray-800 mb-3">How to play</h2>
-          <ul className="text-left text-gray-600 text-sm space-y-2">
-            <li>• Find people who match the questions</li>
-            <li>• Tap a square when you find a match</li>
-            <li>• Get 5 in a row to win!</li>
-          </ul>
+    <>
+      <div className="relative flex flex-col items-center justify-center min-h-full p-6 overflow-hidden">
+        {/* Animated Background Grid */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-accent opacity-5 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-marked opacity-5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
         </div>
 
-        <button
-          onClick={onStart}
-          className="w-full bg-accent text-white font-semibold py-4 px-8 rounded-lg text-lg active:bg-accent-light transition-colors"
-        >
-          Start Game
-        </button>
+        {/* Content */}
+        <div className="relative z-10 w-full max-w-3xl space-y-8">
+          {/* Hero Section */}
+          <div className="text-center space-y-4">
+            <h1 className="text-7xl sm:text-8xl font-black neon-glow tracking-tighter drop-shadow-2xl">
+              Soc Ops
+            </h1>
+            <p className="text-xl sm:text-2xl text-gray-200 font-semibold tracking-wide">
+              Social icebreaker bingo for in-person mixers
+            </p>
+          </div>
+
+          {/* Layered Glass Card Section */}
+          <div className="space-y-4 relative">
+            {/* Background layer */}
+            <div className="glass-card rounded-2xl p-8 absolute inset-0 translate-y-2 translate-x-2 opacity-20" />
+
+            {/* Main card */}
+            <div className="glass-card rounded-2xl p-8 relative space-y-6 border-l border-t border-cyan-400 border-opacity-30">
+              <div className="text-center space-y-3">
+                <h2 className="text-2xl font-bold text-center">
+                  <span className="neon-text">Connect</span>
+                  {' • '}
+                  <span className="neon-text">Play</span>
+                  {' • '}
+                  <span className="neon-text">Win</span>
+                </h2>
+                <p className="text-gray-300 text-sm leading-relaxed max-w-md mx-auto">
+                  Mark 5 squares in a row to win! Every match brings people together in unexpected ways.
+                </p>
+              </div>
+
+              {/* Stats Row */}
+              <div className="grid grid-cols-3 gap-4 py-4 border-y border-gray-700">
+                {[
+                  { label: '5x5', desc: 'Board' },
+                  { label: '25', desc: 'Questions' },
+                  { label: '∞', desc: 'Connections' },
+                ].map((stat) => (
+                  <div key={stat.label} className="text-center">
+                    <div className="text-2xl font-bold text-accent">{stat.label}</div>
+                    <div className="text-xs text-gray-400 uppercase tracking-wider">{stat.desc}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Dual CTAs */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+            <button
+              onClick={onStart}
+              className="neon-btn px-10 py-4 rounded-xl font-bold text-lg transition-all duration-200 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-cyan-400 order-1"
+              aria-label="Start Game Now"
+            >
+              Start Game
+            </button>
+            <button
+              onClick={() => setShowModal(true)}
+              className="px-10 py-4 rounded-xl font-bold text-lg border-2 border-cyan-400 text-cyan-300 hover:bg-cyan-400 hover:bg-opacity-10 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-cyan-400"
+              aria-label="Learn How to Play"
+            >
+              How to Play
+            </button>
+          </div>
+
+          {/* Footer accent */}
+          <div className="text-center pt-4">
+            <p className="text-xs text-gray-500 uppercase tracking-widest font-semibold">
+              🎲 Perfect for mixers & team events
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
+
+      {/* Modal */}
+      <HowToPlayModal isOpen={showModal} onClose={() => setShowModal(false)} />
+    </>
   );
 }
