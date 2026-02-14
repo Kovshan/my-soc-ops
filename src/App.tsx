@@ -4,6 +4,7 @@ import { GameScreen } from './components/GameScreen';
 import { BingoModal } from './components/BingoModal';
 import { ScavengerScreen } from './components/ScavengerScreen';
 import { HuntCompleteModal } from './components/HuntCompleteModal';
+import { CardDeckScreen } from './components/CardDeckScreen';
 
 function App() {
   const {
@@ -19,13 +20,14 @@ function App() {
     resetGame,
     dismissModal,
     startHunt,
+    startDeck,
     toggleHuntItem,
     dismissHuntModal,
     resetHunt,
   } = useBingoGame();
 
   if (gameState === 'start') {
-    return <StartScreen onStart={startGame} onStartHunt={startHunt} />;
+    return <StartScreen onStart={startGame} onStartHunt={startHunt} onStartDeck={startDeck} />;
   }
 
   if (mode === 'bingo') {
@@ -42,6 +44,12 @@ function App() {
           <BingoModal onDismiss={dismissModal} />
         )}
       </>
+    );
+  }
+
+  if (mode === 'deck') {
+    return (
+      <CardDeckScreen onBack={resetGame} />
     );
   }
 

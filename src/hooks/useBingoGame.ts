@@ -29,6 +29,7 @@ export interface BingoGameActions {
   // Mode + Hunt actions
   setMode: (mode: GameMode) => void;
   startHunt: () => void;
+  startDeck: () => void;
   toggleHuntItem: (id: number) => void;
   resetHunt: () => void;
   dismissHuntModal: () => void;
@@ -96,7 +97,7 @@ function validateStoredData(data: unknown): data is StoredGameData {
   }
   
   // Validate mode
-  if (typeof obj.mode !== 'string' || !['bingo', 'hunt'].includes(obj.mode as string)) {
+  if (typeof obj.mode !== 'string' || !['bingo', 'hunt', 'deck'].includes(obj.mode as string)) {
     return false;
   }
 
@@ -263,6 +264,17 @@ export function useBingoGame(): BingoGameState & BingoGameActions {
     }
   }, []);
 
+  // Card Deck mode: simple state flip; deck state is local to UI
+  const startDeck = useCallback(() => {
+    setMode('deck');
+    setBoard([]);
+    setWinningLine(null);
+    setShowBingoModal(false);
+    setHuntItems([]);
+    setShowHuntModal(false);
+    setGameState('playing');
+  }, []);
+
   const toggleHunt = useCallback((id: number) => {
     setHuntItems((curr) => {
       const next = toggleHuntItemUtil(curr, id);
@@ -297,6 +309,7 @@ export function useBingoGame(): BingoGameState & BingoGameActions {
     dismissModal,
     setMode,
     startHunt,
+    startDeck,
     toggleHuntItem: toggleHunt,
     resetHunt,
     dismissHuntModal,

@@ -4,9 +4,10 @@ import { HowToPlayModal } from './HowToPlayModal';
 interface StartScreenProps {
   onStart: () => void;
   onStartHunt?: () => void;
+  onStartDeck?: () => void;
 }
 
-export function StartScreen({ onStart, onStartHunt }: StartScreenProps) {
+export function StartScreen({ onStart, onStartHunt, onStartDeck }: StartScreenProps) {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -66,7 +67,7 @@ export function StartScreen({ onStart, onStartHunt }: StartScreenProps) {
             </div>
           </div>
 
-          {/* Dual CTAs */}
+          {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
             <button
               onClick={onStart}
@@ -82,6 +83,15 @@ export function StartScreen({ onStart, onStartHunt }: StartScreenProps) {
                 aria-label="Start Scavenger Hunt"
               >
                 Start Scavenger Hunt
+              </button>
+            )}
+            {onStartDeck && (
+              <button
+                onClick={onStartDeck}
+                className="px-10 py-4 rounded-xl font-bold text-lg border-2 border-cyan-400 text-cyan-300 hover:bg-cyan-400 hover:bg-opacity-10 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-cyan-400"
+                aria-label="Start Card Deck Mode"
+              >
+                Card Deck Shuffle
               </button>
             )}
             <button

@@ -16,7 +16,7 @@ export interface BingoLine {
 export type GameState = 'start' | 'playing' | 'bingo';
 
 // Multi-mode support
-export type GameMode = 'bingo' | 'hunt';
+export type GameMode = 'bingo' | 'hunt' | 'deck';
 
 // Scavenger Hunt item
 export interface HuntItem {
